@@ -1,13 +1,13 @@
 //Load data and manipulate it
 
-d3.csv("./Multiples.csv")
+d3.csv('./Multiples.csv')
     .then(function(data) {
 
         // changes the string of This Year Sales to number
         data.forEach(d => {
-            let num = d["This Year Sales"]
+            let num = d['This Year Sales']
             num = num.substring(1);
-            d["This Year Sales"] = +num
+            d['This Year Sales'] = +num
         })
 
         // groups by districts
@@ -35,6 +35,9 @@ d3.csv("./Multiples.csv")
         groupsDistrict.forEach(element => {
             createSvg(element, names)
         });
+    }).catch((err) => {
+        console.log(err)
+        noData(err);
     })
 
 // creates a div for names, gives it id and append the names
@@ -42,8 +45,8 @@ const createRowNames = names => {
     let width = 150;
     let div = d3.select('#content')
         .append('div')
-        .attr("width", width)
-        .attr("height", "180")
+        .attr('width', width)
+        .attr('height', '180')
         .attr('id', 'rowNames')
 
     names.forEach(el => {
@@ -67,8 +70,8 @@ const createSvg = (element, names) => {
     // creates a div that appends it to content
     const div = d3.select('#content')
         .append('div')
-        .attr("width", width)
-        .attr("height", "20")
+        .attr('width', width)
+        .attr('height', '20')
 
     // append div a title of district
     div.append('p').text(title).attr('class', 'title')
@@ -86,18 +89,29 @@ const createSvg = (element, names) => {
     // append a svg to div
     const svg = div
         .append('svg')
-        .attr("width", width)
-        .attr("height", y.range()[1])
+        .attr('width', width)
+        .attr('height', y.range()[1])
 
     // defines empty seection and joins it data with g and then it's translated for positioning
-    const bar = svg.selectAll("g")
+    const bar = svg.selectAll('g')
         .data(sorted)
-        .join("g")
-        .attr("transform", d => `translate(0,${y(d['Category'])})`)
+        .join('g')
+        .attr('transform', d => `translate(0,${y(d['Category'])})`)
 
     // append rectangle to each g, that is green and has right width and height is made the way that it has space between
-    bar.append("rect")
-        .attr("fill", "forestgreen")
-        .attr("width", d => x(d["This Year Sales"]))
-        .attr("height", y.bandwidth() - 5);
+    bar.append('rect')
+        .attr('fill', 'forestgreen')
+        .attr('width', d => x(d['This Year Sales']))
+        .attr('height', y.bandwidth() - 5);
+}
+
+// error handeling
+const noData = (error) => {
+    const div = d3.select('#content')
+        .append('div')
+        .attr('width', 200)
+        .attr('height', 200)
+
+    div.append('p').text('No data!')
+    div.append('p').text(error)
 }
