@@ -1,0 +1,37 @@
+* {
+    font-family: 'Cinzel', serif;
+}
+
+svg {
+    margin-right: 20px;
+}
+
+#content {
+    display: flex;
+    justify-content: center;
+}
+
+p {
+    margin: 0;
+    font-size: 1em;
+    height: 20px;
+    display: flex;
+    align-items: flex-end;
+    padding-top: 5px;
+}
+
+.title {
+    margin-bottom: 10px;
+    font-size: 1.2em
+}
+
+h2 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+#rowNames {
+    margin-top: 30px;
+    margin-right: 10px;
+}
